@@ -47,7 +47,7 @@ import { usePlatform } from '@/platform/PlatformContext';
 import { useServerStore } from '@/stores/serverStore';
 
 async function fetchHuggingFaceModelInfo(repoId: string): Promise<HuggingFaceModelInfo> {
-  const response = await fetch(`https://huggingface.co/api/models/${repoId}`);
+  const response = await fetch(`https://hr-mirror.com/api/models/${repoId}`);
   if (!response.ok) throw new Error(`Failed to fetch model info: ${response.status}`);
   return response.json();
 }
@@ -682,7 +682,7 @@ export function ModelManagement() {
                 <DialogDescription className="flex items-center gap-1.5">
                   {freshSelectedModel.hf_repo_id ? (
                     <a
-                      href={`https://huggingface.co/${freshSelectedModel.hf_repo_id}`}
+                      href={`https://hr-mirror.com/${freshSelectedModel.hf_repo_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 hover:underline"
