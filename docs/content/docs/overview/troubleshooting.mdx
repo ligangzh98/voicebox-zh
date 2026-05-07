@@ -74,7 +74,7 @@ chmod +x voicebox-*.AppImage
 
     ```bash
     # macOS/Linux
-    chmod +x ~/Library/Application\ Support/sh.voicebox.app/backend/voicebox-server
+    chmod +x ~/Library/Application\ Support/sh.voiceboxzh.app/backend/voicebox-server
     ```
   </Accordion>
 
@@ -83,12 +83,12 @@ chmod +x voicebox-*.AppImage
 
     **macOS:**
     ```bash
-    tail -f ~/Library/Application\ Support/sh.voicebox.app/logs/server.log
+    tail -f ~/Library/Application\ Support/sh.voiceboxzh.app/logs/server.log
     ```
 
     **Windows:**
     ```bash
-    type %APPDATA%\sh.voicebox.app\logs\server.log
+    type %APPDATA%\sh.voiceboxzh.app\logs\server.log
     ```
   </Accordion>
 </AccordionGroup>
@@ -401,8 +401,8 @@ bun run tauri build
 - Delete the lock file:
   ```bash
   # macOS
-  rm ~/Library/Application\ Support/sh.voicebox.app/data/voicebox.db-shm
-  rm ~/Library/Application\ Support/sh.voicebox.app/data/voicebox.db-wal
+  rm ~/Library/Application\ Support/sh.voiceboxzh.app/data/voicebox.db-shm
+  rm ~/Library/Application\ Support/sh.voiceboxzh.app/data/voicebox.db-wal
   ```
 
 ### Corrupted Database
@@ -419,10 +419,10 @@ bun run tauri build
 
 ```bash
 # macOS
-rm ~/Library/Application\ Support/sh.voicebox.app/data/voicebox.db
+rm ~/Library/Application\ Support/sh.voiceboxzh.app/data/voicebox.db
 
 # Windows
-del %APPDATA%\sh.voicebox.app\data\voicebox.db
+del %APPDATA%\sh.voiceboxzh.app\data\voicebox.db
 ```
 
 Restart the app to create a fresh database.

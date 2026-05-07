@@ -263,7 +263,7 @@ async fn start_server(
             }
         }
     }
-    
+
     #[cfg(windows)]
     {
         use std::net::TcpStream;
@@ -307,7 +307,7 @@ async fn start_server(
                 if parts.len() >= 2 {
                     let command = parts[0];
                     let pid_str = parts[1];
-                    
+
                     if command.contains("voicebox") {
                         if let Ok(pid) = pid_str.parse::<i32>() {
                             println!("Found orphaned voicebox-server on legacy port {} (PID: {}, CMD: {}), killing it...", LEGACY_PORT, pid, command);
@@ -325,7 +325,7 @@ async fn start_server(
             }
         }
     }
-    
+
     #[cfg(windows)]
     {
         use std::net::TcpStream;
@@ -341,7 +341,7 @@ async fn start_server(
             }
         }
     }
-    
+
     // Brief wait for port to be released
     std::thread::sleep(std::time::Duration::from_millis(200));
 
@@ -692,10 +692,10 @@ async fn start_server(
 async fn stop_server(state: State<'_, ServerState>) -> Result<(), String> {
     let pid = state.server_pid.lock().unwrap().take();
     let _child = state.child.lock().unwrap().take();
-    
+
     if let Some(pid) = pid {
         println!("stop_server: Stopping server with PID: {}", pid);
-        
+
         #[cfg(unix)]
         {
             use std::process::Command;
@@ -703,20 +703,20 @@ async fn stop_server(state: State<'_, ServerState>) -> Result<(), String> {
             let _ = Command::new("kill")
                 .args(["-TERM", "--", &format!("-{}", pid)])
                 .output();
-            
+
             // Brief wait then force kill
             std::thread::sleep(std::time::Duration::from_millis(100));
-            
+
             let _ = Command::new("kill")
                 .args(["-9", "--", &format!("-{}", pid)])
                 .output();
             let _ = Command::new("kill")
                 .args(["-9", &pid.to_string()])
                 .output();
-            
+
             println!("stop_server: Process group kill completed");
         }
-        
+
         #[cfg(windows)]
         {
             // Send graceful shutdown via HTTP — the server's parent-pid watchdog
@@ -734,7 +734,7 @@ async fn stop_server(state: State<'_, ServerState>) -> Result<(), String> {
             println!("Shutdown request sent (server watchdog will handle cleanup)");
         }
     }
-    
+
     Ok(())
 }
 
@@ -825,7 +825,7 @@ fn stop_audio_playback(
 /// `FocusSnapshot::bundle_id` on the current platform — reverse-DNS bundle
 /// id on macOS, lowercased exe basename on Windows/Linux.
 #[cfg(target_os = "macos")]
-const VOICEBOX_BUNDLE_ID: &str = "sh.voicebox.app";
+const VOICEBOX_BUNDLE_ID: &str = "sh.voiceboxzh.app";
 #[cfg(target_os = "windows")]
 const VOICEBOX_BUNDLE_ID: &str = "voicebox.exe";
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
@@ -1300,7 +1300,7 @@ pub fn run() {
             {
                 use windows::Win32::Foundation::HWND;
                 use windows::Win32::UI::WindowsAndMessaging::{SetClassLongPtrW, GCLP_HICON, GCLP_HICONSM};
-                
+
                 if let Some((_, window)) = app.webview_windows().iter().next() {
                     if let Ok(hwnd) = window.hwnd() {
                         let hwnd = HWND(hwnd.0);
