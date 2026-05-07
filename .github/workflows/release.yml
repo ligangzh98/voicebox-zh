@@ -157,8 +157,8 @@ jobs:
         if: matrix.platform == 'macos-latest' || matrix.platform == 'macos-15-intel'
         uses: apple-actions/import-codesign-certs@v3
         with:
-          p12-file-base64: ${{ secrets.APPLE_CERTIFICATE }}
-          p12-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          certificate: ${{ secrets.APPLE_CERTIFICATE }}
+          certificate-key: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
 
       - name: Disk / environment snapshot (pre-bundle debug)
         if: contains(matrix.platform, 'ubuntu') || contains(matrix.platform, 'namespace')
