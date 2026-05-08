@@ -52,9 +52,32 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Setup Tauri Signing Key (if available)
+        run: |
+          if [ -f tauri/src-tauri/tauri-signing-key.pem ]; then
+            echo "Found signing key, configuring for updater..."
+
+            # Check if we have a password configured in secrets
+            if [ -n "${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}" ]; then
+              # Use the passworded key directly
+              cp tauri/src-tauri/tauri-signing-key.pem $HOME/.tauri/voicebox.key
+              echo "Using passworded key"
+            else
+              # Key has no password, use directly
+              cp tauri/src-tauri/tauri-signing-key.pem $HOME/.tauri/voicebox.key
+              echo "Using unpassworded key"
+            fi
+
+            # Set up environment for tauri-action to find the key
+            export TAURI_SIGNING_KEY_PATH="$HOME/.tauri/voicebox.key"
+          else
+            echo "No signing key found, skipping updater setup"
+          fi
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
         with:
           projectPath: tauri
           tagName: v__VERSION__
@@ -63,4 +86,5 @@ jobs:
           releaseDraft: true
           prerelease: true
           args: ""
+          createUpdaterArtifacts: "false"
           includeUpdaterJson: false

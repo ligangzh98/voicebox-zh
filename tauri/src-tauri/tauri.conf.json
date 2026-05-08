@@ -12,8 +12,11 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "createUpdaterArtifacts": "v1Compatible",
-    "externalBin": ["binaries/voicebox-server", "binaries/voicebox-mcp"],
+    "createUpdaterArtifacts": "false",
+    "externalBin": [
+      "binaries/voicebox-server",
+      "binaries/voicebox-mcp"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -37,7 +40,9 @@
     "macOSPrivateApi": true,
     "security": {
       "csp": null,
-      "capabilities": ["default"]
+      "capabilities": [
+        "default"
+      ]
     },
     "windows": [
       {
@@ -60,8 +65,10 @@
       "open": ".*"
     },
     "updater": {
-          "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEUxRENBQkRBQjdBNTM1OTIKUldTU05hVzMycXZjNGJGcUxmcVVocll2QjdSaTJNdlFxR2M3VDJsMnVvbDdyZGRPMmRlOW9aWTcK",
-          "endpoints": ["https://github.com/jamiepine/voicebox/releases/latest/download/latest-placeholder.json"]
+      "pubkey": "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2VWbuG8kn/0LnnW+sOgauc1CuP3eYlzPlOR6EwVglx7b8Qn8vOBu1CQQLKAyVwA6GRIZ0TQmO+113+o6yhxhJN8ye0aH9/AP1qlXi6Y0rY/pAIZ31wjJP1Eq/cwxGDBZ5HhoU3zQySzbnkkAphNtJ9EUDKHVS2Oawse8ZqFiFgKcGigJw9I2P40SQ8ztRr9ZCCRbOyAVgCA2kAUgP4zOKWFWgZasFCeB2y10ch7kznyjAbOyxaI0v4Yotu/YBBTVh547yKnVUlwlQYd7lsxklnLCK7blFbPSrHaxISyqQyR0RsV5PcxZT6ZbZOo4FpP74xYdRDYez8UrqQRem+/RRjupa99NrJDOh70F3YmmfD1dxi9GWsCRmvinDz/D1YptQ3coO/qZyORA45InKE4o1sUf92yGeUF8ONUOKq50Yc0i/i6Mrer9FB59iU3vpBAdqe+AOP8tMcClkqmRR0UBbuOIT8AHzHKeIiSL3Yx7JMnpD1doV6UUAqazWW+jv6vpGvKvRhaR9MIw4ybskuK7h9RYHqqWKFri3ltOGWHPeLz5LyKHgJNBUgVGdlCWQsnkAWjNF0zUAdfwmPRIL6blR7qeCukm0aC8UTBdMz+WAEdEQ1NiIKUgcFjx21Kd3O3nuqPfPdSNB360wArODUOH3L1cZ0NesxvOcyLIZuznJ9MCAwEAAQ==",
+      "endpoints": [
+        "https://github.com/jamiepine/voicebox/releases/latest/download/latest-placeholder.json"
+      ]
     }
   }
 }

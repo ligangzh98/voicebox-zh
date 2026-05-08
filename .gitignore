@@ -65,6 +65,12 @@ temp/
 *.tmp
 
 # E2E test artifacts
+
+# Tauri signing keys (sensitive)
+tauri/src-tauri/tauri-signing-key.pem
+tauri/src-tauri/tauri-signing-key-passworded.pem
+
+# E2E test artifacts
 backend/tests/results/
 backend/tests/fixtures/reference_voice.wav
 backend/tests/fixtures/reference_voice.txt
