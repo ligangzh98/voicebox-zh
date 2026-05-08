@@ -12,7 +12,7 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "createUpdaterArtifacts": "false",
+    "createUpdaterArtifacts": false,
     "externalBin": [
       "binaries/voicebox-server",
       "binaries/voicebox-mcp"
