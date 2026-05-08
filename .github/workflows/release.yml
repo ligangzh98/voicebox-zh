@@ -228,7 +228,7 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
-          includeUpdaterJson: true
+          includeUpdaterJson: false
 
       # Tauri's bundler signs the .app and notarizes it, but the .dmg wrapper
       # ships unnotarized. Gatekeeper rejects that on macOS 15 Sequoia (caught
