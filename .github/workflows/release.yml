@@ -203,27 +203,6 @@ jobs:
       # Cap the step at 30 min so we get logs instead of waiting out the 6hr
       # job timeout. Other platforms historically complete in ~25 min, so 45
       # is comfortable.
-      - name: Setup Tauri Signing Key (if available)
-        run: |
-          if [ -f tauri/src-tauri/tauri-signing-key.pem ]; then
-            echo "Found signing key, configuring for updater..."
-
-            # Check if we have a password configured in secrets
-            if [ -n "${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}" ]; then
-              # Use the passworded key directly
-              cp tauri/src-tauri/tauri-signing-key.pem $HOME/.tauri/voicebox.key
-              echo "Using passworded key"
-            else
-              # Key has no password, use directly
-              cp tauri/src-tauri/tauri-signing-key.pem $HOME/.tauri/voicebox.key
-              echo "Using unpassworded key"
-            fi
-
-            # Set up environment for tauri-action to find the key
-            export TAURI_SIGNING_KEY_PATH="$HOME/.tauri/voicebox.key"
-          else
-            echo "No signing key found, skipping updater setup"
-          fi
 
       - uses: tauri-apps/tauri-action@v0.6
         timeout-minutes: ${{ (contains(matrix.platform, 'ubuntu') || contains(matrix.platform, 'namespace')) && 30 || 45 }}
