@@ -283,6 +283,11 @@ async def _run_startup(application: FastAPI) -> None:
         logger.warning("Could not initialize progress manager event loop: %s", e)
 
     try:
+        import os
+        # 设置镜像端点
+        logger.info("Setting HuggingFace mirror endpoint to https://hf-mirror.com")
+        os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+        logger.info("HF_ENDPOINT: %s", os.environ["HF_ENDPOINT"])
         from huggingface_hub import constants as hf_constants
 
         cache_dir = Path(hf_constants.HF_HUB_CACHE)
