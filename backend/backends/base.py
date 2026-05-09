@@ -40,6 +40,10 @@ def is_model_cached(
         True if model is fully cached, False if missing or incomplete.
     """
     try:
+        import os
+        logger.info("Setting HuggingFace mirror endpoint to https://hf-mirror.com when checking cache")
+        os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+        logger.info("HF_ENDPOINT: %s", os.environ["HF_ENDPOINT"])
         from huggingface_hub import constants as hf_constants
 
         repo_cache = Path(hf_constants.HF_HUB_CACHE) / ("models--" + hf_repo.replace("/", "--"))

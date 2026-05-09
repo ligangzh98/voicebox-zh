@@ -279,6 +279,10 @@ class HFProgressTracker:
             # This is needed because the class was already defined at import time
             self._hf_tqdm_original_update = None
             try:
+                logger.info("Setting HuggingFace mirror endpoint to https://hf-mirror.com when monkey-patching")
+                import os
+                os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+                logger.info("HF_ENDPOINT: %s", os.environ["HF_ENDPOINT"])
                 from huggingface_hub.utils import tqdm as hf_tqdm_module
 
                 if hasattr(hf_tqdm_module, "tqdm"):

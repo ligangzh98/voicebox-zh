@@ -102,6 +102,10 @@ class PyTorchTTSBackend:
             # On Windows local setups, model assets can otherwise split between
             # .hf-cache/hub and .hf-cache/transformers, causing speech_tokenizer
             # and preprocessor_config.json to fail to resolve during load.
+            logger.info("Setting HuggingFace mirror endpoint to https://hf-mirror.com when loading model")
+            import os
+            os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+            logger.info("HF_ENDPOINT: %s", os.environ["HF_ENDPOINT"])
             from huggingface_hub import constants as hf_constants
             tts_cache_dir = hf_constants.HF_HUB_CACHE
 

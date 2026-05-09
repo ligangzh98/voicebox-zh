@@ -110,6 +110,11 @@ class HumeTadaBackend:
 
             install_dac_shim()
 
+            logger.info("Setting HuggingFace mirror endpoint to https://hf-mirror.com when loading model")
+            import os
+            os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+            logger.info("HF_ENDPOINT: %s", os.environ["HF_ENDPOINT"])
+
             import torch
             from huggingface_hub import snapshot_download
 
