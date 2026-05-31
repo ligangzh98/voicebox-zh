@@ -40,6 +40,13 @@ RUN pip install --no-cache-dir --prefix=/install --no-deps hume-tada
 RUN pip install --no-cache-dir --prefix=/install \
     git+https://github.com/QwenLM/Qwen3-TTS.git
 
+# Clean up build-stage bloat
+RUN rm -rf /install/lib/python3.11/site-packages/**/__pycache__ \
+    && find /install -name '*.pyc' -delete \
+    && find /install -name '*.pyo' -delete \
+    && find /install -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true \
+    && rm -rf /root/.cache/pip
+
 
 # === Stage 3: Runtime ===
 FROM python:3.11-slim

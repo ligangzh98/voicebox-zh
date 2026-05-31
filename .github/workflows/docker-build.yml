@@ -31,11 +31,13 @@ jobs:
       - name: Build Docker image
         run: docker build -t voicebox:latest .
 
-      - name: Export Docker image as tar.gz
+      - name: Export and split Docker image
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          docker save voicebox:latest | gzip > "voicebox-v${VERSION}-docker.tar.gz"
-          echo "ARTIFACT_NAME=voicebox-v${VERSION}-docker.tar.gz" >> "$GITHUB_ENV"
+          PREFIX="voicebox-v${VERSION}-docker.tar.gz"
+          docker save voicebox:latest | gzip | split -b 1900M - "${PREFIX}.part-"
+          ls -lh "${PREFIX}.part-"*
+          echo "ARTIFACT_PATTERN=${PREFIX}.part-*" >> "$GITHUB_ENV"
 
       - name: Clean up Docker image
         run: docker rmi voicebox:latest
@@ -43,6 +45,6 @@ jobs:
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.ARTIFACT_NAME }}
+          files: ${{ env.ARTIFACT_PATTERN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
