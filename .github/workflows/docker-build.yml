@@ -1,0 +1,35 @@
+name: Docker Build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t voicebox:latest .
+
+      - name: Export Docker image as tar.gz
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          docker save voicebox:latest | gzip > "voicebox-v${VERSION}-docker.tar.gz"
+          echo "ARTIFACT_NAME=voicebox-v${VERSION}-docker.tar.gz" >> "$GITHUB_ENV"
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ARTIFACT_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
