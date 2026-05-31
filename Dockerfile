@@ -16,7 +16,7 @@ COPY web/ ./web/
 # Strip workspaces not needed for web build, and fix trailing comma
 RUN sed -i '/"tauri"/d; /"landing"/d' package.json && \
     sed -i -z 's/,\n  ]/\n  ]/' package.json
-RUN bun install --no-save
+RUN bun install
 # Build frontend (skip tsc — upstream has pre-existing type errors)
 RUN cd web && bunx --bun vite build
 
