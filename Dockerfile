@@ -17,6 +17,8 @@ COPY web/ ./web/
 RUN sed -i '/"tauri"/d; /"landing"/d' package.json && \
     sed -i -z 's/,\n  ]/\n  ]/' package.json
 RUN bun install
+# Ensure web workspace dependencies are explicitly installed
+RUN cd web && bun install
 # Build frontend (skip tsc — upstream has pre-existing type errors)
 RUN cd web && bunx --bun vite build
 
