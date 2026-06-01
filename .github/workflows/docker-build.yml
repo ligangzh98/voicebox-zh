@@ -35,7 +35,7 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           PREFIX="voicebox-v${VERSION}-docker.tar.gz"
-          docker save voicebox:latest | gzip | split -b 1900M - "${PREFIX}.part-"
+          docker save voicebox:latest | gzip | split -b 1000M - "${PREFIX}.part-"
           ls -lh "${PREFIX}.part-"*
           echo "ARTIFACT_PATTERN=${PREFIX}.part-*" >> "$GITHUB_ENV"
 
