@@ -1,0 +1,50 @@
+name: Docker Build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Free up disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          swap-storage: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t voicebox:latest .
+
+      - name: Export and split Docker image
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          PREFIX="voicebox-v${VERSION}-docker.tar.gz"
+          docker save voicebox:latest | gzip | split -b 1000M - "${PREFIX}.part-"
+          ls -lh "${PREFIX}.part-"*
+          echo "ARTIFACT_PATTERN=${PREFIX}.part-*" >> "$GITHUB_ENV"
+
+      - name: Clean up Docker image
+        run: docker rmi voicebox:latest
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ARTIFACT_PATTERN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

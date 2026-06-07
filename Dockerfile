@@ -16,7 +16,9 @@ COPY web/ ./web/
 # Strip workspaces not needed for web build, and fix trailing comma
 RUN sed -i '/"tauri"/d; /"landing"/d' package.json && \
     sed -i -z 's/,\n  ]/\n  ]/' package.json
-RUN bun install --no-save
+RUN bun install
+# Ensure web workspace dependencies are explicitly installed
+RUN cd web && bun install
 # Build frontend (skip tsc — upstream has pre-existing type errors)
 RUN cd web && bunx --bun vite build
 
@@ -39,6 +41,13 @@ RUN pip install --no-cache-dir --prefix=/install --no-deps chatterbox-tts
 RUN pip install --no-cache-dir --prefix=/install --no-deps hume-tada
 RUN pip install --no-cache-dir --prefix=/install \
     git+https://github.com/QwenLM/Qwen3-TTS.git
+
+# Clean up build-stage bloat
+RUN rm -rf /install/lib/python3.11/site-packages/**/__pycache__ \
+    && find /install -name '*.pyc' -delete \
+    && find /install -name '*.pyo' -delete \
+    && find /install -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true \
+    && rm -rf /root/.cache/pip
 
 
 # === Stage 3: Runtime ===
